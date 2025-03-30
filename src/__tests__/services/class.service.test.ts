@@ -16,19 +16,21 @@ describe("ClassService", () => {
   });
 
   const mockClassResponse: ClassResponse = {
-    data: [{
-      id: 1,
-      name: "Class A2",
-      teacherEmail: "Teacher A",
-      level: ClassLevel.Primary2,
-      created_at: new Date(),
-      updated_at: new Date(),
-      teacher: {
-        name: "Teacher A",
+    data: [
+      {
+        id: 1,
+        name: "Class A2",
+        teacherEmail: "Teacher A",
+        level: ClassLevel.Primary2,
+        created_at: new Date(),
+        updated_at: new Date(),
+        teacher: {
+          name: "Teacher A",
+        },
       },
-    }],
-    success: true
-  }
+    ],
+    success: true,
+  };
 
   const mockFailureResponse: ClassResponse = {
     success: false,

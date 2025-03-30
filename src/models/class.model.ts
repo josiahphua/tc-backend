@@ -1,9 +1,5 @@
 import pool from "../config/database";
-import {
-  CreateClassDTO,
-  ClassResponse,
-  DBClass,
-} from "../types/class.types";
+import { CreateClassDTO, ClassResponse, DBClass } from "../types/class.types";
 
 export class ClassModel {
   public async getAll(): Promise<ClassResponse> {
@@ -21,10 +17,10 @@ export class ClassModel {
         JOIN teachers t ON c.teacher_email = t.email
         ORDER BY c.id ASC
       `);
-      
+
       return {
         success: true,
-        data: result.rows.map(row => ({
+        data: result.rows.map((row) => ({
           id: row.id,
           name: row.name,
           teacherEmail: row.teacher_email,
@@ -32,15 +28,15 @@ export class ClassModel {
           created_at: row.created_at,
           updated_at: row.updated_at,
           teacher: {
-            name: row.teacher_name
-          }
-        }))
+            name: row.teacher_name,
+          },
+        })),
       };
     } catch (error) {
       console.error("Error fetching classes:", error);
       return {
         success: false,
-        error: "Failed to fetch classes"
+        error: "Failed to fetch classes",
       };
     }
   }
@@ -95,7 +91,7 @@ export class ClassModel {
           updated_at: result.rows[0].updated_at,
           teacher: {
             name: result.rows[0].teacher_name,
-          }
+          },
         },
       ],
     };

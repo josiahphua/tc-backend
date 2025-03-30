@@ -7,7 +7,7 @@ export interface Class {
   updated_at: Date;
   teacher: {
     name: string;
-  }
+  };
 }
 
 export interface DBClass {
