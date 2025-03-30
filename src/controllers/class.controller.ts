@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response } from "express";
 import ClassService from "../services/class.service";
 import { CreateClassDTO } from "../types/class.types";
 
@@ -13,7 +13,7 @@ class ClassController {
     const response = await ClassService.createClass(classFormData);
     return this.sendResponse(res, response);
   }
-  
+
   private sendResponse(res: Response, response: any): void {
     if (!response.success) {
       res.status(400).json(response);

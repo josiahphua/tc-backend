@@ -1,7 +1,16 @@
 export interface Class {
   id: number;
   name: string;
-  form_teacher: string;
+  teacherEmail: string;
+  level: ClassLevel;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface DBClass {
+  id: number;
+  name: string;
+  teacher_email: string;
   level: ClassLevel;
   created_at: Date;
   updated_at: Date;
@@ -9,7 +18,7 @@ export interface Class {
 
 export interface CreateClassDTO {
   name: string;
-  form_teacher: string;
+  teacherEmail: string;
   level: ClassLevel;
 }
 
@@ -21,10 +30,10 @@ export interface ClassResponse {
 }
 
 export enum ClassLevel {
-  Primary1 = 'Primary 1',
-  Primary2 = 'Primary 2',
-  Primary3 = 'Primary 3',
-  Primary4 = 'Primary 4',
-  Primary5 = 'Primary 5',
-  Primary6 = 'Primary 6',
+  Primary1 = "Primary 1",
+  Primary2 = "Primary 2",
+  Primary3 = "Primary 3",
+  Primary4 = "Primary 4",
+  Primary5 = "Primary 5",
+  Primary6 = "Primary 6",
 }

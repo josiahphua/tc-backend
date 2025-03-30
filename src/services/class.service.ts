@@ -1,29 +1,35 @@
-import { ClassModel } from "../models/class.model";
+import ClassModel from "../models/class.model";
 import { Class, CreateClassDTO, ClassResponse } from "../types/class.types";
 
 class ClassService {
-  private classModel: ClassModel;
-
-  constructor() {
-    this.classModel = new ClassModel();
-  }
-
   public async getAllClasses(): Promise<ClassResponse> {
     try {
-      const classes = await this.classModel.getAll();
+      const classes: Class[] = await ClassModel.getAll();
       return { data: classes, success: true };
     } catch (error) {
       return this.handleError(error);
     }
   }
 
-  public async createClass(classFormData: CreateClassDTO): Promise<ClassResponse> {
+  public async createClass(
+    classFormData: CreateClassDTO,
+  ): Promise<ClassResponse> {
+    if (!classFormData.teacherEmail) {
+      return { success: false, error: "Form teacher email is required" };
+    }
+
     try {
-      const teacherExists = await this.classModel.checkTeacherExists(classFormData.form_teacher);
+      const teacherExists = await ClassModel.checkTeacherExists(
+        classFormData.teacherEmail,
+      );
+      console.log("Teacher exists:", teacherExists);
       if (!teacherExists) {
-        return { success: false, error: 'Teacher does not exist' };
+        return {
+          success: false,
+          error: `Teacher with email ${classFormData.teacherEmail} not found`,
+        };
       }
-      return await this.classModel.CreateClass(classFormData);
+      return await ClassModel.CreateClass(classFormData);
     } catch (error) {
       return this.handleError(error);
     }
@@ -34,7 +40,7 @@ class ClassService {
     if (error instanceof Error) {
       return { success: false, error: error.message };
     }
-    return { success: false, error: 'An unknown error occurred' };
+    return { success: false, error: "An unknown error occurred" };
   }
 }
 

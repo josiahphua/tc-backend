@@ -3,6 +3,16 @@ export interface Teacher {
   name: string;
   email: string;
   subject: Subject;
+  contactNumber: string;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface DBTeacher {
+  id: number;
+  name: string;
+  email: string;
+  subject: Subject;
   contact_number: string;
   created_at: Date;
   updated_at: Date;
@@ -10,9 +20,9 @@ export interface Teacher {
 
 export interface CreateTeacherDTO {
   name: string;
-  email: string;
   subject: Subject;
-  contact_number: string;
+  email: string;
+  contactNumber: string;
 }
 
 export interface TeacherResponse {
@@ -23,13 +33,13 @@ export interface TeacherResponse {
 }
 
 export enum Subject {
-  English = 'English',
-  MotherTongue = 'Mother Tongue Language',
-  Mathematics = 'Mathematics',
-  Science = 'Science',
-  Art = 'Art',
-  Music = 'Music',
-  PhysicalEducation = 'Physical Education',
-  SocialStudies = 'Social Studies',
-  CharacterAndCitizenshipEducation = 'Character and Citizenship Education',
+  English = "English",
+  MotherTongue = "Mother Tongue Language",
+  Mathematics = "Mathematics",
+  Science = "Science",
+  Art = "Art",
+  Music = "Music",
+  PhysicalEducation = "Physical Education",
+  SocialStudies = "Social Studies",
+  CharacterAndCitizenshipEducation = "Character and Citizenship Education",
 }
