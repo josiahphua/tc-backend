@@ -5,6 +5,9 @@ export interface Class {
   level: ClassLevel;
   created_at: Date;
   updated_at: Date;
+  teacher: {
+    name: string;
+  }
 }
 
 export interface DBClass {
@@ -14,6 +17,7 @@ export interface DBClass {
   level: ClassLevel;
   created_at: Date;
   updated_at: Date;
+  teacher_name: string;
 }
 
 export interface CreateClassDTO {

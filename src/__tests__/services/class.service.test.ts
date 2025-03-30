@@ -1,7 +1,6 @@
 import ClassService from "../../services/class.service";
 import ClassModel from "../../models/class.model";
 import {
-  Class,
   CreateClassDTO,
   ClassResponse,
   ClassLevel,
@@ -16,29 +15,20 @@ describe("ClassService", () => {
     jest.clearAllMocks();
   });
 
-  const mockClasses: Class[] = [
-    {
+  const mockClassResponse: ClassResponse = {
+    data: [{
       id: 1,
       name: "Class A2",
       teacherEmail: "Teacher A",
       level: ClassLevel.Primary2,
       created_at: new Date(),
       updated_at: new Date(),
-    },
-    {
-      id: 1,
-      name: "Class A5",
-      teacherEmail: "Teacher B",
-      level: ClassLevel.Primary5,
-      created_at: new Date(),
-      updated_at: new Date(),
-    },
-  ];
-
-  const mockSuccessResponse: ClassResponse = {
-    success: true,
-    data: mockClasses,
-  };
+      teacher: {
+        name: "Teacher A",
+      },
+    }],
+    success: true
+  }
 
   const mockFailureResponse: ClassResponse = {
     success: false,
@@ -47,11 +37,11 @@ describe("ClassService", () => {
 
   describe("getAllClasses", () => {
     it("should return all classes successfully", async () => {
-      mockClassModel.getAll.mockResolvedValue(mockClasses);
+      mockClassModel.getAll.mockResolvedValue(mockClassResponse);
 
       const response = await ClassService.getAllClasses();
 
-      expect(response).toEqual(mockSuccessResponse);
+      expect(response).toEqual(mockClassResponse);
       expect(mockClassModel.getAll).toHaveBeenCalledTimes(1);
     });
 
@@ -74,17 +64,12 @@ describe("ClassService", () => {
         level: ClassLevel.Primary2,
       };
 
-      const mockResponse: ClassResponse = {
-        success: true,
-        data: mockClasses,
-      };
-
       mockClassModel.checkTeacherExists.mockResolvedValue(true);
-      mockClassModel.CreateClass.mockResolvedValue(mockResponse);
+      mockClassModel.CreateClass.mockResolvedValue(mockClassResponse);
 
       const response = await ClassService.createClass(classFormData);
 
-      expect(response).toEqual(mockResponse);
+      expect(response).toEqual(mockClassResponse);
       expect(mockClassModel.checkTeacherExists).toHaveBeenCalledWith(
         classFormData.teacherEmail,
       );
@@ -103,7 +88,7 @@ describe("ClassService", () => {
       const response = await ClassService.createClass(classFormData);
       expect(response).toEqual({
         success: false,
-        error: "Teacher does not exist",
+        error: "Teacher with email Nonexistent Teacher not found",
       });
       expect(mockClassModel.checkTeacherExists).toHaveBeenCalledWith(
         classFormData.teacherEmail,

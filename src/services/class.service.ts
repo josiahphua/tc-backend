@@ -1,11 +1,10 @@
 import ClassModel from "../models/class.model";
-import { Class, CreateClassDTO, ClassResponse } from "../types/class.types";
+import { CreateClassDTO, ClassResponse } from "../types/class.types";
 
 class ClassService {
   public async getAllClasses(): Promise<ClassResponse> {
     try {
-      const classes: Class[] = await ClassModel.getAll();
-      return { data: classes, success: true };
+      return await ClassModel.getAll();
     } catch (error) {
       return this.handleError(error);
     }

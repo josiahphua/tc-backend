@@ -1,28 +1,48 @@
 import pool from "../config/database";
 import {
-  Class,
   CreateClassDTO,
   ClassResponse,
   DBClass,
 } from "../types/class.types";
 
 export class ClassModel {
-  public async getAll(): Promise<Class[]> {
-    const result = await pool.query<DBClass>(
-      `SELECT * FROM classes
-        JOIN teachers ON classes.form_teacher = teachers.email
-        ORDER BY id ASC`,
-    );
-    return result.rows.map(
-      (row): Class => ({
-        id: row.id,
-        name: row.name,
-        teacherEmail: row.teacher_email,
-        level: row.level,
-        created_at: row.created_at,
-        updated_at: row.updated_at,
-      }),
-    );
+  public async getAll(): Promise<ClassResponse> {
+    try {
+      const result = await pool.query<DBClass>(`
+        SELECT
+          c.id,
+          c.name,
+          c.teacher_email,
+          c.level,
+          c.created_at,
+          c.updated_at,
+          t.name as teacher_name
+        FROM classes c
+        JOIN teachers t ON c.teacher_email = t.email
+        ORDER BY c.id ASC
+      `);
+      
+      return {
+        success: true,
+        data: result.rows.map(row => ({
+          id: row.id,
+          name: row.name,
+          teacherEmail: row.teacher_email,
+          level: row.level,
+          created_at: row.created_at,
+          updated_at: row.updated_at,
+          teacher: {
+            name: row.teacher_name
+          }
+        }))
+      };
+    } catch (error) {
+      console.error("Error fetching classes:", error);
+      return {
+        success: false,
+        error: "Failed to fetch classes"
+      };
+    }
   }
 
   public async CreateClass(
@@ -73,6 +93,9 @@ export class ClassModel {
           level: result.rows[0].level,
           created_at: result.rows[0].created_at,
           updated_at: result.rows[0].updated_at,
+          teacher: {
+            name: result.rows[0].teacher_name,
+          }
         },
       ],
     };

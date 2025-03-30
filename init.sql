@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS classes (
     id SERIAL PRIMARY KEY,
     level VARCHAR(50) NOT NULL,
     name VARCHAR(100) NOT NULL,
-    form_teacher VARCHAR(100) NOT NULL REFERENCES teachers(email) ON DELETE RESTRICT,
+    teacher_email VARCHAR(100) NOT NULL REFERENCES teachers(email) ON DELETE RESTRICT,
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
 );
