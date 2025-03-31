@@ -54,7 +54,7 @@ Run the application
 ```bash
 npm run dev
 ```
-The API will be available at `http://localhost:3000`.
+The API will be available at `http://localhost:3001`.
 
 ## API Endpoints
 ### Teachers
