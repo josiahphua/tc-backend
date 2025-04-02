@@ -1,6 +1,10 @@
 # tc-backend
 
-A RESTful API for managing teachers and classes with PostgreSQL database, built with Express.js and TypeScript.
+## Overview
+A RESTful API for managing teachers and classes with 
+PostgreSQL database, built with Node.js, Express.js, and TypeScript. 
+This API allows administrators to create and see teachers and classes, 
+ensuring data integrity and validation.
 
 ---
 
@@ -36,6 +40,13 @@ Build and run the application with PostgreSQL in a Docker container
 ```bash
 docker-compose up -d --build
 ```
+
+For Logs
+```bash
+docker-compose logs app
+```
+
+### OR
 
 Install dependencies
 ```bash
